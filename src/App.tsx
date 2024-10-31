@@ -39,7 +39,6 @@ function App() {
     } catch (error) {
       console.error("Error:", error);
     }
-    ignore();
   };
 
   // handle when the user presses the like button
@@ -111,11 +110,6 @@ function App() {
   // opens the link to the current source of the meal recipe
   const openSource = () => {
     window.open(currentSource, '_blank');
-  }
-
-  // ignore this 
-  const ignore = () => {
-    const name = currentMealName;
   }
 
   return (
