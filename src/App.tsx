@@ -10,8 +10,6 @@ function App() {
   const [groceries, setGroceries] = useState<Record<string, string>>({});
   // current meal image
   const [currentImage, setCurrentImage] = useState<string | null>(null);
-  // current meal name
-  const [currentMealName, setCurrentMealName] = useState<string | null>(null);
   // current youtube video, tutorial on how to make the meal
   const [currentVideo, setCurrentVideo] = useState<string | URL | undefined>(undefined);
   // the source for the current meal
@@ -25,8 +23,6 @@ function App() {
         const mealData = await response.json();
         // update current meal image to the new url
         setCurrentMeal(mealData);
-        // update the current name
-        setCurrentMealName(mealData.meals[0].strMeal);
         // update the current image
         setCurrentImage(`${mealData.meals[0].strMealThumb}/preview`);
         // update the current video URL
