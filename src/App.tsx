@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import './index.css'
 
 function App() {
   // current meal
@@ -12,6 +13,10 @@ function App() {
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   // current meal name
   const [currentMealName, setCurrentMealName] = useState<string | null>(null);
+  // current youtube video, tutorial on how to make the meal
+  const [currentVideo, setCurrentVideo] = useState<string | URL | undefined>(undefined);
+  // the source for the current meal
+  const [currentSource, setCurrentSource] = useState<string | URL | undefined>(undefined);
 
   // gets a random meal
   const randomMeal = async () => {
@@ -21,8 +26,14 @@ function App() {
         const mealData = await response.json();
         // update current meal image to the new url
         setCurrentMeal(mealData);
+        // update the current name
         setCurrentMealName(mealData.meals[0].strMeal);
+        // update the current image
         setCurrentImage(`${mealData.meals[0].strMealThumb}/preview`);
+        // update the current video URL
+        setCurrentVideo(mealData.meals[0].strYoutube);
+        // update the current source URL
+        setCurrentSource(mealData.meals[0].strSource);
       } else {
         console.error("Failed to fetch meal");
       }
@@ -37,8 +48,8 @@ function App() {
 
     // add the meal to the list of liked meals
     repopulateMeals(currentMeal.meals[0].strMeal);
+    // add the ingredients of the liked meal to the grocery list
     repopulateList(currentMeal.meals[0]);
-
     // generate a new random meal image
     randomMeal();
   };
@@ -52,6 +63,7 @@ function App() {
       const ingredient = mealData[`strIngredient${i}`];
       const measure = mealData[`strMeasure${i}`];
 
+      // ensure the ingredient exists
       if (ingredient && ingredient.trim() !== "") {
         if (newGroceries[ingredient]) {
           // if ingredient already exists, append the new measure
@@ -68,10 +80,10 @@ function App() {
   };
 
   // repopulate the current list of liked meals
-  const repopulateMeals = (meal: string) => {
-    setMeals((prevMeals) => ({
+  const repopulateMeals = (strMeal: any) => {
+    setMeals((prevMeals: any) => ({
       ...prevMeals,
-      [meal]: true,
+      [currentMeal]: true,
     }));
   };
 
@@ -80,18 +92,27 @@ function App() {
     // your implementation
   };
 
-  // resets the list of current groceries
+  // resets the list of current groceries 
   const resetList = () => {
     setGroceries({});
   };
 
-  // resets the list of currently liked meals
+  // resets the list of currently liked meals 
   const resetMeals = () => {
     setMeals({});
   };
 
+  // plays the youtube video for the current meal's recipe
+  const openVideo = () => {
+    window.open(currentVideo, '_blank');
+  };
+
+  // opens the link to the current source of the meal recipe
+  const openSource = () => {
+    window.open(currentSource, '_blank');
+  }
+
   return (
-    <>
       <nav id="desktop-nav">
         <div className="title">
           <h1>Green Line Goods</h1>
@@ -102,6 +123,12 @@ function App() {
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
+          </button>
+          <button className="view-recipe-video" onClick={openVideo}>
+            View Recipe Video
+          </button>
+          <button className="view-recipe-source" onClick={openSource}>
+            View Recipe Source
           </button>
           <button className="reset-meals" onClick={resetMeals}>
             Reset Meals
@@ -139,8 +166,7 @@ function App() {
           </button>
         </div>
       </nav>
-    </>
   );
-}
+};
 
 export default App;
