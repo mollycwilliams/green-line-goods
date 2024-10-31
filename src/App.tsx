@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import './index.css'
 
 function App() {
   // current meal
@@ -47,21 +46,22 @@ function App() {
     if (!currentMeal) return;
 
     // add the meal to the list of liked meals
-    repopulateMeals(currentMeal.meals[0].strMeal);
+    repopulateMeals();
     // add the ingredients of the liked meal to the grocery list
-    repopulateList(currentMeal.meals[0]);
+    repopulateList();
     // generate a new random meal image
     randomMeal();
   };
 
   // repopulate the current list of groceries
-  const repopulateList = (mealData: any) => {
+  const repopulateList = () => {
     const newGroceries = { ...groceries };
+    const meals = currentMeal.meals[0];
 
     // add each ingredient and its quantity to the grocery list
     for (let i = 1; i <= 20; i++) {
-      const ingredient = mealData[`strIngredient${i}`];
-      const measure = mealData[`strMeasure${i}`];
+      const ingredient = meals[`strIngredient${i}`];
+      const measure = meals[`strMeasure${i}`];
 
       // ensure the ingredient exists
       if (ingredient && ingredient.trim() !== "") {
@@ -80,10 +80,10 @@ function App() {
   };
 
   // repopulate the current list of liked meals
-  const repopulateMeals = (strMeal: any) => {
+  const repopulateMeals = () => {
     setMeals((prevMeals: any) => ({
       ...prevMeals,
-      [currentMeal]: true,
+      [currentMeal.meals[0].strMeal]: true,
     }));
   };
 
@@ -134,6 +134,7 @@ function App() {
             Reset Meals
           </button>
         </div>
+        <h1>currentMealName</h1>
         <div className="swipe-screen-container">
           <div className="meals-container">
             <h2>Liked Meals</h2>
