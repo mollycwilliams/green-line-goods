@@ -141,7 +141,7 @@ function App() {
             </ul>
           </div>
           <div className="image-display-container">
-            {currentImage && <img src={currentImage} alt="Random Meal" />}
+            {currentImage && <img className="random-meal-img" src={currentImage} alt="Random Meal" />}
           </div>
           <div className="ingredients-container">
             <h2>Ingredients</h2>
