@@ -130,7 +130,6 @@ function App() {
             Reset Meals
           </button>
         </div>
-        <h1>currentMealName</h1>
         <div className="swipe-screen-container">
           <div className="meals-container">
             <h2>Liked Meals</h2>
