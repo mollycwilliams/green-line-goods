@@ -110,8 +110,8 @@ function App() {
 
   return (
       <nav id="desktop-nav">
-        <div className="title">
-          <h1>Green Line Goods</h1>
+        <div className="logo-container">
+          <img src="src/assets/glg_logo.png"></img>
         </div>
         <button className="reset-list" onClick={resetList}>
           Reset List
