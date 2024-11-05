@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -36,6 +36,12 @@ function App() {
       console.error("Error:", error);
     }
   };
+
+    // Load a random meal on startup
+    useEffect(() => {
+      randomMeal();
+    }, []);
+  
 
   // handle when the user presses the like button
   const like = async () => {
@@ -88,14 +94,10 @@ function App() {
     // your implementation
   };
 
-  // resets the list of current groceries 
-  const resetList = () => {
-    setGroceries({});
-  };
-
-  // resets the list of currently liked meals 
+  // resets the list of currently liked meals and groceries 
   const resetMeals = () => {
     setMeals({});
+    setGroceries({});
   };
 
   // plays the youtube video for the current meal's recipe
@@ -108,14 +110,11 @@ function App() {
     window.open(currentSource, '_blank');
   }
 
-  return (
+    return (
       <nav id="desktop-nav">
         <div className="logo-container">
           <img src="src/assets/glg_logo.png"></img>
         </div>
-        <button className="reset-list" onClick={resetList}>
-          Reset List
-        </button>
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
@@ -163,6 +162,6 @@ function App() {
         </div>
       </nav>
   );
-};
+}
 
 export default App;
