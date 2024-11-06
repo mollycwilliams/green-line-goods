@@ -5,8 +5,8 @@ function App() {
   // current meal
   const [currentMeal, setCurrentMeal] = useState<any>(null);
   // current list of user's liked meals
-  const [meals, setMeals] = useState<Record<string, boolean>>({});
-  // current list of user's needed groceries
+  const [meals, setMeals] = useState<Record<string, string>>({});
+  // current list of sources for user's liked meals
   const [groceries, setGroceries] = useState<Record<string, string>>({});
   // current meal image
   const [currentImage, setCurrentImage] = useState<string | null>(null);
@@ -24,7 +24,7 @@ function App() {
         // update current meal image to the new url
         setCurrentMeal(mealData);
         // update the current image
-        setCurrentImage(`${mealData.meals[0].strMealThumb}/preview`);
+        setCurrentImage(`${mealData.meals[0].strMealThumb}`);
         // update the current video URL
         setCurrentVideo(mealData.meals[0].strYoutube);
         // update the current source URL
@@ -81,11 +81,11 @@ function App() {
     setGroceries(newGroceries);
   };
 
-  // repopulate the current list of liked meals
+  // repopulate the current list of liked meals, as well as sources
   const repopulateMeals = () => {
     setMeals((prevMeals: any) => ({
       ...prevMeals,
-      [currentMeal.meals[0].strMeal]: true,
+      [currentMeal.meals[0].strMeal]: currentMeal.meals[0].strSource,
     }));
   };
 
@@ -160,9 +160,9 @@ function App() {
           <div className="meals-container">
             <h2>Liked Meals</h2>
             <ul>
-              {Object.keys(meals).map((meal, index) => (
-                // renders each meal as an item
-                <li key={index}>{meal}</li>
+            {Object.entries(meals).map(([mealName, source], index) => (
+                // renders each meal as a clickable name
+                <li key={index}><a href={source}>{mealName}</a></li>
               ))}
             </ul>
           </div>
