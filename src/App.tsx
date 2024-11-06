@@ -92,7 +92,15 @@ function App() {
   // generate a list of the current groceries
   const generateList = () => {
     // your implementation
+
+    setShowPopup(true);
   };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+  const [showPopup, setShowPopup] = useState(false);
 
   // resets the list of currently liked meals and groceries 
   const resetMeals = () => {
@@ -119,6 +127,22 @@ function App() {
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
           </button>
+
+          {showPopup && (
+        <div className="popup-overlay" onClick={closePopup}>
+          <div className="popup" onClick={(e) => e.stopPropagation()}>
+            <h3>Grocery List</h3>
+            <ul>
+              {Object.entries(groceries).map(([ingredient, measure], index) => (
+                // renders each ingredient with its measure as an item
+                <li key={index}>{`${ingredient}: ${measure}`}</li>
+              ))}
+            </ul>
+            <button onClick={closePopup}>Close</button>
+          </div>
+        </div>
+          )}
+
           <button className="view-recipe-video" onClick={openVideo}>
             View Recipe Video
           </button>
