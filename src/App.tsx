@@ -123,6 +123,9 @@ function App() {
         <div className="logo-container">
           <img src="src/assets/glg_logo.png"></img>
         </div>
+        <div className="dishnames">
+          <h1>{currentMeal ? currentMeal.meals[0].strMeal : "No meal selected"}</h1>
+        </div>
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List

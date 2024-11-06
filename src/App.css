@@ -28,6 +28,15 @@ nav, .title {
     color: rgb(255, 255, 255);
 }
 
+.dishnames{
+    color: rgb(255, 255, 255);
+    margin: 10px 0;
+    font-size: 10px;
+    position: relative;
+    top: 220px;
+}  
+
+
 .swipe-screen-container {
     display: flex;
     flex-direction: row;
