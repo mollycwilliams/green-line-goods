@@ -34,7 +34,18 @@ nav, .title {
     font-size: 10px;
     position: relative;
     top: 220px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center; 
 }  
+
+.dishnames h1 {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%; /* Adjust this based on your container width */
+  }
 
 
 .swipe-screen-container {
