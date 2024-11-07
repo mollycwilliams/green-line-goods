@@ -181,10 +181,10 @@ function App() {
         </div>
         <div className="buttons-container">
           <button className="dislike" onClick={randomMeal}>
-            <img src="./assets/x.png" alt="dislike" />
+            <img src="/src/assets/x.png" alt="dislike" />
           </button>
           <button className="like" onClick={like}>
-            <img src="./assets/like.png" alt="like" />
+            <img src="/src/assets/like.png" alt="like" />
           </button>
         </div>
       </nav>
