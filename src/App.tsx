@@ -14,6 +14,8 @@ function App() {
   const [currentVideo, setCurrentVideo] = useState<string | URL | undefined>(undefined);
   // the source for the current meal
   const [currentSource, setCurrentSource] = useState<string | URL | undefined>(undefined);
+  // popup for grocery list
+  const [showPopup, setShowPopup] = useState(false);
 
   // gets a random meal
   const randomMeal = async () => {
@@ -91,16 +93,13 @@ function App() {
 
   // generate a list of the current groceries
   const generateList = () => {
-    // your implementation
-
     setShowPopup(true);
   };
 
+  // closes the grocery list popup
   const closePopup = () => {
     setShowPopup(false);
   };
-
-  const [showPopup, setShowPopup] = useState(false);
 
   // resets the list of currently liked meals and groceries 
   const resetMeals = () => {
@@ -116,7 +115,35 @@ function App() {
   // opens the link to the current source of the meal recipe
   const openSource = () => {
     window.open(currentSource, '_blank');
-  }
+  };
+
+  // save meals for the current user
+  const saveMeals = () => {
+    localStorage.setItem("meals", JSON.stringify(meals));
+    localStorage.setItem("groceries", JSON.stringify(groceries));
+    alert("Successfully saved meals and groceries.");
+  };
+
+  // load meals for the current user
+  const loadMeals = () => {
+    const loadedMeals = localStorage.getItem("meals");
+    const loadedGroceries = localStorage.getItem("groceries");
+
+    // check if successful (not null)
+    if(loadedMeals && loadedGroceries) {
+      // parse each JSON with saved contents, and set current meals / groceries 
+      setMeals(JSON.parse(loadedMeals));
+      setGroceries(JSON.parse(loadedGroceries));
+      alert("Successfully loaded meals and groceries");
+    } else {
+      alert("Requested data not found.");
+    }
+  };
+
+  // clears all saved data (meals/groceries)
+  const clearData = () => {
+    localStorage.clear();
+  };
 
     return (
       <nav id="desktop-nav">
@@ -124,28 +151,28 @@ function App() {
           <img src="src/assets/glg_logo.png"></img>
         </div>
         <div className="dishnames">
-          <h1>{currentMeal ? currentMeal.meals[0].strMeal : "No meal selected"}</h1>
+          <h1>{currentMeal.meals[0].strMeal}</h1>
         </div>
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
           </button>
-
+        <div className="popup-container">
           {showPopup && (
-        <div className="popup-overlay" onClick={closePopup}>
-          <div className="popup" onClick={(e) => e.stopPropagation()}>
-            <h3>Grocery List</h3>
-            <ul>
-              {Object.entries(groceries).map(([ingredient, measure], index) => (
-                // renders each ingredient with its measure as an item
-                <li key={index}>{`${ingredient}: ${measure}`}</li>
-              ))}
-            </ul>
-            <button onClick={closePopup}>Close</button>
+          <div className="popup-overlay" onClick={closePopup}>
+            <div className="popup" onClick={(e) => e.stopPropagation()}>
+              <h3>Grocery List</h3>
+              <ul>
+                {Object.entries(groceries).map(([ingredient, measure], index) => (
+                  // renders each ingredient with its measure as an item
+                  <li key={index}>{`${ingredient}: ${measure}`}</li>
+                ))}
+              </ul>
+              <button onClick={closePopup}>Close</button>
+            </div>
           </div>
+            )}
         </div>
-          )}
-
           <button className="view-recipe-video" onClick={openVideo}>
             View Recipe Video
           </button>
@@ -154,6 +181,15 @@ function App() {
           </button>
           <button className="reset-meals" onClick={resetMeals}>
             Reset Meals
+          </button>
+          <button className="save-meals" onClick={saveMeals}>
+            Save Meals
+          </button>
+          <button className="load-meals" onClick={loadMeals}>
+            Load Meals
+          </button>
+          <button className="clear-data" onClick={clearData}>
+            Clear Data
           </button>
         </div>
         <div className="swipe-screen-container">
