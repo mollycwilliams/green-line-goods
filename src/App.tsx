@@ -58,7 +58,7 @@ function App() {
   };
 
   // repopulate the current list of groceries
-  const repopulateList = () => {
+  const repopulateList = async () => {
     const newGroceries = { ...groceries };
     const meals = currentMeal.meals[0];
 
@@ -84,7 +84,7 @@ function App() {
   };
 
   // repopulate the current list of liked meals, as well as sources
-  const repopulateMeals = () => {
+  const repopulateMeals = async () => {
     setMeals((prevMeals: any) => ({
       ...prevMeals,
       [currentMeal.meals[0].strMeal]: currentMeal.meals[0].strSource,
@@ -92,40 +92,40 @@ function App() {
   };
 
   // generate a list of the current groceries
-  const generateList = () => {
+  const generateList = async () => {
     setShowPopup(true);
   };
 
   // closes the grocery list popup
-  const closePopup = () => {
+  const closePopup = async () => {
     setShowPopup(false);
   };
 
   // resets the list of currently liked meals and groceries 
-  const resetMeals = () => {
+  const resetMeals = async () => {
     setMeals({});
     setGroceries({});
   };
 
   // plays the youtube video for the current meal's recipe
-  const openVideo = () => {
+  const openVideo = async () => {
     window.open(currentVideo, '_blank');
   };
 
   // opens the link to the current source of the meal recipe
-  const openSource = () => {
+  const openSource = async () => {
     window.open(currentSource, '_blank');
   };
 
   // save meals for the current user
-  const saveMeals = () => {
+  const saveMeals = async () => {
     localStorage.setItem("meals", JSON.stringify(meals));
     localStorage.setItem("groceries", JSON.stringify(groceries));
     alert("Successfully saved meals and groceries.");
   };
 
   // load meals for the current user
-  const loadMeals = () => {
+  const loadMeals = async () => {
     const loadedMeals = localStorage.getItem("meals");
     const loadedGroceries = localStorage.getItem("groceries");
 
@@ -141,7 +141,7 @@ function App() {
   };
 
   // clears all saved data (meals/groceries)
-  const clearData = () => {
+  const clearData = async () => {
     localStorage.clear();
   };
 
@@ -225,6 +225,6 @@ function App() {
         </div>
       </nav>
   );
-}
+};
 
 export default App;
