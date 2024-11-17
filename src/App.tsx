@@ -150,9 +150,7 @@ function App() {
         <div className="logo-container">
           <img src="src/assets/glg_logo.png"></img>
         </div>
-        <div className="dishnames">
-          <h1>{currentMeal?.meals?.[0]?.strMeal || "Loading..."}</h1>
-        </div>
+        
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
@@ -203,6 +201,9 @@ function App() {
             </ul>
           </div>
           <div className="image-display-container">
+            <div className="dishnames">
+              <h1>{currentMeal?.meals?.[0]?.strMeal || "Loading..."}</h1>
+            </div>
             {currentImage && <img className="random-meal-img" src={currentImage} alt="Random Meal" />}
           </div>
           <div className="ingredients-container">
