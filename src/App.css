@@ -34,18 +34,7 @@ nav, .title {
     font-size: 10px;
     position: relative;
     top: 220px;
-    width: 80%;
-    max-width: 300px;
-    text-align: center; 
 }  
-
-.dishnames h1 {
-    white-space: normal;
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%; /* Adjust this based on your container width */
-  }
 
 
 .swipe-screen-container {
@@ -191,4 +180,25 @@ button img {
   .popup button {
     color: #000000; /* Example: White text for the close button */
     background-color: #008456; /* Example: Red background for the button */
+  }
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #008456; 
+    border-radius: 6px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #008456; 
+    border-radius: 6px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #005f3e; 
   }
