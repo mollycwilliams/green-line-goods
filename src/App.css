@@ -177,7 +177,7 @@ button img {
     color: #333; 
   }
   
-  .popup {
+.popup {
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -187,28 +187,29 @@ button img {
     text-align: center; /* Centers text inside the popup */
   }
 
-  .popup button {
+.popup button {
     color: #000000; /* Example: White text for the close button */
     background-color: #008456; /* Example: Red background for the button */
   }
+  
 /* width */
 ::-webkit-scrollbar {
     width: 12px;
   }
   
-  /* Track */
-  ::-webkit-scrollbar-track {
+/* Track */
+::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #008456; 
     border-radius: 6px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #008456; 
     border-radius: 6px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #005f3e; 
-  }
+}
