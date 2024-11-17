@@ -151,7 +151,7 @@ function App() {
           <img src="src/assets/glg_logo.png"></img>
         </div>
         <div className="dishnames">
-          <h1>{currentMeal.meals[0].strMeal}</h1>
+          <h1>{currentMeal?.meals?.[0]?.strMeal || "Loading..."}</h1>
         </div>
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
