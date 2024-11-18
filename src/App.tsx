@@ -14,8 +14,6 @@ function App() {
   const [currentVideo, setCurrentVideo] = useState<string | URL | undefined>(undefined);
   // the source for the current meal
   const [currentSource, setCurrentSource] = useState<string | URL | undefined>(undefined);
-  // popup for grocery list
-  const [showPopup, setShowPopup] = useState(false);
 
   // gets a random meal
   const randomMeal = async () => {
@@ -91,14 +89,48 @@ function App() {
     }));
   };
 
-  // generate a list of the current groceries
+  // generate a list of the current groceries, to a new (child) page
   const generateList = async () => {
-    setShowPopup(true);
-  };
+    // create a string that holds the current list of ingredients
+    const listContent = Object.entries(groceries)
+    .map(([ingredient, measure]) => `<li>${ingredient}: ${measure}</li>`)
+    .join("");
 
-  // closes the grocery list popup
-  const closePopup = async () => {
-    setShowPopup(false);
+    // open the new window
+    const newWindow = window.open("", "_blank");
+    // html for new window
+    newWindow?.document.write(`
+      <html>
+        <head>
+          <title>Grocery List</title>
+          <style>
+            body {font-family: "Poppins", sans-serif; 
+            background-color: #1f1d20;
+            justify-content: center;}
+            h3 {display: flex; color: rgb(255, 255, 255);
+            filter: drop-shadow(1px 1px 0.5px #008456);}
+            p {font-family: "Poppins", sans-serif; color: rgb(255, 255, 255);
+            filter: drop-shadow(1.5px 1.5 px 0.5px #008456);}
+            li:hover{color: #a3a3a3;}
+            .logo-container {display: flex; justify-content:center; align-items: center; margin-bottom:10px;}
+            .logo-container img {width: 150px; height:auto;}
+            ::selection {background-color: #008456; color: #ffffff;}
+            ::-webkit-scrollbar{width 12px;}
+            ::-webkit-scrollbar-track{box-shadow: inset 0 0 5px #008456;
+            border-radius: 6px;}
+            ::-webkit-scrollbar-thumb{background: #008456; border-radius: 6px;}
+            ::-webkit-scrollbar-thumb:hover{background:}
+          </style>
+        </head>
+        <body>
+          <div class="logo-container">
+            <img src="/public/glg_logo.png"></img>
+          </div>
+          <h3>Grocery List<h3>
+          <ul>${listContent}</ul>
+        </body>
+      </html>
+      `);
   };
 
   // resets the list of currently liked meals and groceries 
@@ -145,32 +177,16 @@ function App() {
     localStorage.clear();
   };
 
+    // app html
     return (
       <nav id="desktop-nav">
         <div className="logo-container">
           <img src="src/assets/glg_logo.png"></img>
         </div>
-        
         <div className="list-button-container">
           <button className="generate-list" onClick={generateList}>
             Generate Grocery List
           </button>
-        <div className="popup-container">
-          {showPopup && (
-          <div className="popup-overlay" onClick={closePopup}>
-            <div className="popup" onClick={(e) => e.stopPropagation()}>
-              <h3>Grocery List</h3>
-              <ul>
-                {Object.entries(groceries).map(([ingredient, measure], index) => (
-                  // renders each ingredient with its measure as an item
-                  <li key={index}>{`${ingredient}: ${measure}`}</li>
-                ))}
-              </ul>
-              <button onClick={closePopup}>Close</button>
-            </div>
-          </div>
-            )}
-        </div>
           <button className="view-recipe-video" onClick={openVideo}>
             View Recipe Video
           </button>
@@ -205,6 +221,14 @@ function App() {
               <h1>{currentMeal?.meals?.[0]?.strMeal || "Loading..."}</h1>
             </div>
             {currentImage && <img className="random-meal-img" src={currentImage} alt="Random Meal" />}
+            <div className="buttons-container">
+              <button className="dislike" onClick={randomMeal}>
+                <img src="/src/assets/x.png" alt="dislike" />
+              </button>
+              <button className="like" onClick={like}>
+                <img src="/src/assets/like.png" alt="like" />
+              </button>
+            </div>
           </div>
           <div className="ingredients-container">
             <h2>Ingredients</h2>
@@ -216,16 +240,8 @@ function App() {
             </ul>
           </div>
         </div>
-        <div className="buttons-container">
-          <button className="dislike" onClick={randomMeal}>
-            <img src="/src/assets/x.png" alt="dislike" />
-          </button>
-          <button className="like" onClick={like}>
-            <img src="/src/assets/like.png" alt="like" />
-          </button>
-        </div>
       </nav>
-  );
-};
+      );
+    };
 
 export default App;
